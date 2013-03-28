@@ -1402,20 +1402,26 @@
 
 			var orgEvent = event.originalEvent;
 			var isForward = 0;
+			var scrolled = 0;
 
 			// Old school scrollwheel delta
 			if (orgEvent.wheelDelta) {
 				isForward = orgEvent.wheelDelta / 120 < 0;
+        		scrolled = -orgEvent.wheelDelta
 			}
 			if (orgEvent.detail) {
 				isForward = -orgEvent.detail / 3 < 0;
+        		scrolled = orgEvent.detail * 40
 			}
 
 			if (itemNav) {
 				var nextItem = (centeredNav ? rel.centerItem : rel.firstItem) + (isForward ? o.scrollBy : -o.scrollBy);
 				self[centeredNav ? 'toCenter' : 'toStart'](nextItem);
 			} else {
-				self.slideBy(isForward ? o.scrollBy : -o.scrollBy);
+				if(typeof o.scrollBy == 'number')
+					self.slideBy(isForward ? o.scrollBy : -o.scrollBy);
+				else
+					self.slideBy(scrolled,1);
 			}
 		}
 
@@ -1633,7 +1639,7 @@
 			}
 
 			// Scrolling navigation
-			$scrollSource.on('DOMMouseScroll.' + namespace + ' mousewheel.' + namespace, scrollHandler);
+			$scrollSource.on('DOMMouseScroll.' + namespace + ' mousewheel.' + namespace, _.throttle(scrollHandler, 30));
 
 			// Clicking on scrollbar navigation
 			if ($sb[0]) {
