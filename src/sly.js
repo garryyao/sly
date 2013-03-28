@@ -1385,6 +1385,13 @@
 			}
 		}
 
+		function elementHasScroll(el) {
+			if (el.scrollHeight > el.offsetHeight)
+				var overflow = $(el).computedStyle('overflow')
+			if (overflow == 'auto' || overflow == 'scroll')
+				return true;
+		}
+
 		/**
 		 * Mouse scrolling handler.
 		 *
@@ -1397,6 +1404,20 @@
 			if (!o.scrollBy || pos.start === pos.end) {
 				return;
 			}
+
+			var target = $(event.target);
+
+			var parent = target;
+			while (!(parent && elementHasScroll(parent) && parent != self.frame )) {
+				parent = $(parent).parent().get(0);
+				if ($(parent).is('body')) {
+					parent = null
+					break;
+				}
+			}
+
+			if (parent)
+				return;
 
 			stopDefault(event, 1);
 
