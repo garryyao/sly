@@ -278,7 +278,9 @@
 			}
 
 			// Fix possible overflowing
-			slideTo(within(pos.dest, pos.start, pos.end));
+			var fixedPos = within(pos.dest, pos.start, pos.end)
+			if (pos.dest !== fixedPos)
+				slideTo(fixedPos, 1);
 
 			// Extend relative variables object with some useful info
 			rel.slideeSize = slideeSize;
