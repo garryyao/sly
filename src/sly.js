@@ -725,9 +725,9 @@
 				// moving forward and animate it to the start of the visible frame, and vice versa.
 				if (centeredNav) {
 					self.toCenter(index, immediate);
-				} else if (index >= rel.lastItem) {
+				} else if (index > rel.lastItem) {
 					self.toStart(index, immediate);
-				} else if (index <= rel.firstItem) {
+				} else if (index < rel.firstItem) {
 					self.toEnd(index, immediate);
 				} else {
 					resetCycle();
