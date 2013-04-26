@@ -1246,6 +1246,11 @@
 				return;
 			}
 
+			var $target = $(event.target)
+			// No conflicts with jQuery UI draggable.
+			if ($target.is('.ui-draggable') || $target.parents('.ui-draggable').length)
+				return;
+
 			stopDefault(event, 1);
 
 			// Reset dragging object
