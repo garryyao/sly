@@ -1564,6 +1564,7 @@
 			// Unbind all events
 			$doc
 				.add($scrollSource)
+				.add($dragSource)
 				.add($handle)
 				.add($sb)
 				.add($pb)
